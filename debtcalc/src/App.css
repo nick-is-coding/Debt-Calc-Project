@@ -36,3 +36,134 @@
     transform: rotate(360deg);
   }
 }
+
+.Main-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.Total-container {
+  flex-direction: column;
+  display: flex;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  background: gray;
+  border-radius: 1rem;
+}
+
+/* Left Container */
+
+.Left-container {
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Left-container, .Right-container {
+  display: flex;
+  margin: 20px;
+  max-width: 600px;
+}
+/* Right Container */
+
+.Right-container {
+  flex: 1 1;
+  justify-content: center;
+}
+
+/* Debt and Payment Container */
+
+.Debt-container, .Payment-container {
+  font-size: 18px;
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Debt Container */
+
+.form-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  padding: 2px;
+}
+
+.form-input {
+  position: relative;
+}
+
+.form-item label {
+  width: 220px;
+  font-size: 1.8rem;
+  text-align: left;
+  padding-right: 3.5rem;
+}
+
+.form-input input, .form-action input, input.form-input {
+  width: 200px;
+  border-radius: 3px;
+  border: 0px;
+  margin: 10px 0px;
+  font-size: 16px;
+}
+
+.form-input input, input.form-input {
+  height: 32px;
+}
+
+.form-action input {
+  font-weight: 600;
+  line-height: 40px;
+}
+
+/* Payment Items */
+
+.Payment-container h2.Uni-header {
+  text-align: left;
+  font-size: 35px;
+}
+
+div.Payment-history h4 {
+  margin-top: 0;
+  margin-bottom: .25rem;  
+}
+
+div.Payment-amount {
+  display: flex;
+  flex-direction: column;
+}
+
+div.Payment-amount label {
+  padding-bottom: 0.25rem;
+  text-align: left;
+}
+
+div.Payment-history {
+  padding: 20px 0px;
+  font-size: 1.5rem;
+}
+
+div.Payment-history h4 {
+  text-align: left;
+}
+
+div.Payment-box {
+  display: flex;
+  text-align: left;
+}
+
+div.Payment-items {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 1rem;
+}
+
+ul.Payment-list {
+  text-decoration: none;
+  list-style: none;
+  text-align: left;
+  padding: 0px;
+}
