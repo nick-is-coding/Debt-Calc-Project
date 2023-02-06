@@ -6,15 +6,14 @@ import MakePayment from './MakePayment';
 
 
 const PAYMENT_DATA = {
-  loanPrincipal: '-',
-  interestRate: '-',
-  interest: '-',
-  numberOfPayments:'-',
-  loanTerm: '-',
-  totalDebt: '-',
-  monthlyPayment: '-',
-  paymentAmount: '-',
-  minimumPayment: '-'
+  loanPrincipal: 0,
+  interestRate: 0,
+  interest: 0,
+  numberOfPayments: 12,
+  totalDebt: 0,
+  initialDebt: 0,
+  paymentAmount: 0,
+  minimumPayment: 0
 }
 
 export default class App extends React.Component {
@@ -23,33 +22,44 @@ export default class App extends React.Component {
     this.state = PAYMENT_DATA;
   }
 
-calculateDebt = () => {
-  const { loanPrincipal, interestRate, loanTerm } = this.state;
-  const interest = interestRate / 100 / 12;
-  const numberOfPayments = loanTerm * 12;
-  const monthlyPayment = loanPrincipal * (interest * Math.pow(1 + interest, numberOfPayments)) / (Math.pow(1 + interest, numberOfPayments) - 1);
-  const totalDebt = monthlyPayment * numberOfPayments;
-  const minimumPayment = loanPrincipal * .01;
-  this.setState({
-    monthlyPayment: monthlyPayment.toFixed(2),
-    totalDebt: totalDebt.toFixed(2),
-    interest: interest,
-    numberOfPayments: numberOfPayments
-  });
-};
+  calculateDebt = () => {
+    const { loanPrincipal, interestRate } = this.state;
+    const principal = loanPrincipal;
+    const interestDec = interestRate / 100;
+    const interest = (principal * interestDec) / 12;
+    const numberOfPayments = 12;
+    const initialDebt = (principal / 1) + interest;
+    const minimumPayment = (principal *.01) + interest;
+    const totalDebt = initialDebt;
+    this.setState({
+      initialDebt: initialDebt.toFixed(2),
+      totalDebt: totalDebt.toFixed(2),
+      interest: interest.toFixed(2),
+      numberOfPayments: numberOfPayments,
+      minimumPayment: minimumPayment.toFixed(2),
+    });
+  };
 
 handleChange = (name, value) => {
   this.setState({[`${name}`]: value});
 }
 
+
 paymentTowardsDebt = (paymentAmount) => {
-  const { interestRate, loanPrincipal, interest, numberOfPayments } = this.state;
+  const { interestRate } = this.state;
   this.setState(prevState => {
-    const totalDebt = prevState.totalDebt - paymentAmount;
-    const monthlyPayment = totalDebt * (interest * Math.pow(1 + interest, numberOfPayments)) / (Math.pow(1 + interest, numberOfPayments) - 1);
-    return { totalDebt: totalDebt.toFixed(2), monthlyPayment: monthlyPayment.toFixed(2) };
+    const totalDebt = paymentAmount == prevState.totalDebt ? 0 : (prevState.totalDebt - paymentAmount);
+    console.log(totalDebt);
+    const minimumPayment = totalDebt == 0 ? 0 : ((totalDebt * .01) + (totalDebt * (interestRate / 100 / 12)));
+    const newTotalDebt = totalDebt + (totalDebt * (interestRate / 100 / 12));
+    console.log(newTotalDebt);
+    return { 
+      totalDebt: newTotalDebt.toFixed(2), 
+      minimumPayment: minimumPayment.toFixed(2) 
+    };
   });
 };
+
 
 render() {
     return (
@@ -65,7 +75,7 @@ render() {
               <div/>
               <div className='Payment-container'>
                   <MakePayment
-                    monthlyPayment={this.state.monthlyPayment}
+                    minimumPayment={this.state.minimumPayment}
                     totalDebt={this.state.totalDebt}
                     paymentTowardsDebt={this.paymentTowardsDebt}
                     interestRate={this.state.interestRate}
@@ -77,8 +87,8 @@ render() {
               <div className='Total-container'>
                 <h2 className="Uni-header">Current Debt</h2>
                   <div>
-                    <h3>Monthly Payments:</h3>
-                    ${this.state.monthlyPayment}
+                    <h3>Minimum Payment:</h3>
+                    ${this.state.minimumPayment}
                   </div>
                   <div>
                     <h3>Debt Remaining:</h3>

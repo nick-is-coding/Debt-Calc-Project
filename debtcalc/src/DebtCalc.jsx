@@ -18,46 +18,33 @@ handleSubmit = (e) => {
 };
 
 render() {
+    const fields = [
+        {label: 'Loan Amount:', name: 'loanPrincipal' },
+        {label: 'Interest Rate:', name: 'interestRate'}
+    ]
     return (
+
             <div className='Debt-container'>
                 <form onSubmit={this.handleSubmit}>
-                    <div className='form-item'>
-                        <label> Loan Amount: </label>
-                            <div className='form-input'>
+                    {fields.map((field) => {
+                        const {label, name} = field;
+                        return (
+                            <>
+                            <div className='form-item'>
+                                <label> {label} </label>
+                                <div className='form-input'>
                                 <input 
-                                    name="loanPrincipal"
+                                    name={name}
                                     onChange={this.handleInput}
                                     type="number"
                                     autoComplete="off"
                                 />
+                                </div>
                             </div>
-                    </div>
-                    <br/>
-                    <div className='form-item'>
-                        <label> Interest Rate: </label>
-                            <div className='form-input'>
-                                <input
-                                    name="interestRate"
-                                    onChange={this.handleInput}
-                                    type="number"
-                                    autoComplete="off"
-                                />
-                            </div>
-                    </div>
-                    <br/>
-                    <div className='form-item'>
-                        <label> Loan Term: </label>
-                            <div className='form-input'>
-                                <input
-                                    name="loanTerm"
-                                    onChange={this.handleInput}
-                                    type="number"
-                                    autoComplete="off"
-                                    placeholder="years"
-                                />
-                            </div>
-                    </div>
-                    <br/>
+                            <br/>
+                            </>
+                        )
+                    })}
                     <div className='form-action'>
                         <input 
                             type="submit"
