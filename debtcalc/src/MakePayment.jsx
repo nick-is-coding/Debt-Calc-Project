@@ -18,7 +18,7 @@ class MakePayment extends React.Component {
         const { paymentAmount } = this.state;
         const { minimumPayment } = this.props;
 
-        if (paymentAmount < minimumPayment - 1) {
+        if (parseFloat(paymentAmount) < parseFloat(minimumPayment)) {
           alert("Payment should be greater than 1% of the Loan Principal.");
           return;
         }
